@@ -15,7 +15,7 @@ export const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background shadow">
+    <header className="sticky top-0 z-50 w-full bg-white shadow">
       <div className="container mx-auto flex items-center justify-between p-4">
         <Link href={"/"} className="flex items-center gap-2">
           <Mountain className="h-6 w-6" />
