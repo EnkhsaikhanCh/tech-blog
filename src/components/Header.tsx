@@ -6,7 +6,6 @@ import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "./ModeToggle";
 interface NavLinkPropsTypes {
   href: string;
   label: string;
@@ -29,7 +28,6 @@ export const Header = () => {
           <NavLink href="/blogs" label="Blogs" pathname={pathname} />
           <NavLink href="/about" label="About" pathname={pathname} />
           <NavLink href="/contact" label="Contact" pathname={pathname} />
-          <ModeToggle />
         </nav>
 
         {/* Mobile nav */}
