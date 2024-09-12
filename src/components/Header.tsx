@@ -4,14 +4,11 @@ import { Mountain, X, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-
-interface NavLinkPropsTypes {
-  href: string;
-  label: string;
-  pathname: string;
-}
+import { MobileNav } from "./MobileNav";
+import { NavLink } from "./NavLink";
+import { docsConfig } from "@/config/docs";
+import { siteConfig } from "@/config/site";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -32,20 +29,13 @@ export const Header = () => {
     };
   }, [isOpen]);
 
-  const menuItems = [
-    { name: "Home", href: "/" },
-    { name: "Blogs", href: "/blogs" },
-    { name: "About Us", href: "/about" },
-    { name: "Contact", href: "/contact" },
-  ];
-
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-white shadow">
         <div className="container mx-auto flex items-center justify-between p-4">
           <Link href={"/"} className="flex items-center gap-2">
             <Mountain className="h-6 w-6" />
-            <span className="text-lg font-semibold">Tech Blog</span>
+            <span className="text-lg font-semibold">{siteConfig.name}</span>
           </Link>
 
           {/* Mobile menu button */}
@@ -65,11 +55,11 @@ export const Header = () => {
 
           {/* Desktop navigation */}
           <nav className="hidden items-center gap-4 md:flex">
-            {menuItems.map((item) => (
+            {docsConfig.mainNav.map((item) => (
               <NavLink
-                key={item.name}
+                key={item.title}
                 href={item.href}
-                label={item.name}
+                label={item.title}
                 pathname={pathname}
               />
             ))}
@@ -77,41 +67,7 @@ export const Header = () => {
         </div>
       </header>
       {/* Mobile Menu Overlay */}
-      <nav
-        className={`fixed left-0 top-0 z-40 h-full w-full bg-white p-4 pt-20 transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <ul className="mt-2 flex flex-col space-y-6 px-5">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className="text-lg text-[#696969]"
-                onClick={toggleMenu} // Close menu when link is clicked
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <MobileNav toggleMenu={toggleMenu} isOpen={isOpen} />
     </>
-  );
-};
-
-const NavLink = ({ href, label, pathname }: NavLinkPropsTypes) => {
-  const isActive = pathname === href;
-
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "rounded px-5 py-1 font-semibold transition-colors hover:text-foreground/80",
-        isActive ? "bg-accent text-foreground" : "text-muted-foreground",
-      )}
-    >
-      {label}
-    </Link>
   );
 };
