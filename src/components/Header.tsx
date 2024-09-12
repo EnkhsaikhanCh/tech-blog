@@ -78,7 +78,7 @@ export const Header = () => {
       </header>
       {/* Mobile Menu Overlay */}
       <nav
-        className={`fixed left-0 top-0 z-40 h-full w-full bg-white p-4 pt-20 transition-transform duration-300 ease-in-out ${
+        className={`fixed left-0 top-0 z-40 h-full w-full bg-white p-4 pt-20 ${
           isOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
