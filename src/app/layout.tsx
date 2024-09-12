@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/Footer";
+import { siteConfig } from "@/config/site";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,8 +19,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Tech Blog",
-  description:
-    "Stay updated with the latest in technology, programming tutorials, and industry insights.",
+  description: siteConfig.description,
 };
 
 interface RootLayoutProps {
