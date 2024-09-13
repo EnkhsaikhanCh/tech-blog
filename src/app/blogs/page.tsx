@@ -65,13 +65,18 @@ export default function ArticlesPageWithPagination() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="react">React</SelectItem>
-              <SelectItem value="html">HTML</SelectItem>
+              <SelectItem value="nextjs">Next JS</SelectItem>
+              <SelectItem value="typescript">TypeScript</SelectItem>
               <SelectItem value="javascript">JavaScript</SelectItem>
+              <SelectItem value="graphql">GraphQL</SelectItem>
+              <SelectItem value="apollo">Apollo</SelectItem>
               <SelectItem value="css">CSS</SelectItem>
               <SelectItem value="chatgpt">ChatGPT</SelectItem>
               <SelectItem value="tailwindcss">Tailwind CSS</SelectItem>
               <SelectItem value="jest">Jest</SelectItem>
               <SelectItem value="cypress">Cypress</SelectItem>
+              <SelectItem value="threejs">Three JS</SelectItem>
+              <SelectItem value="cloudinary">Cloudinary</SelectItem>
             </SelectContent>
           </Select>
         </motion.section>
