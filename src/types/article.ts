@@ -12,4 +12,7 @@ export interface Article {
   published_at: string;
   username: string;
   reading_time_minutes: string;
+  path: string;
+  body_html?: string;
+  readable_publish_date?: string;
 }

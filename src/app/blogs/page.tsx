@@ -100,6 +100,8 @@ export default function ArticlesPageWithPagination() {
                   <BlogCard
                     key={article.id}
                     id={article.id}
+                    // url={article.url}
+                    path={article.path}
                     title={article.title}
                     description={article.description}
                     published_at={article.published_at}
