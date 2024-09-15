@@ -103,7 +103,8 @@ body {
 .prose p {
   text-align: justify;
   overflow-wrap: break-word;
-  line-height: 1.7;
+  font-size: 1.2rem;
+  line-height: 1.5;
   margin-bottom: 1.5rem;
   color: #333;
 }

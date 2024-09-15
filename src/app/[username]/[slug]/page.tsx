@@ -81,7 +81,7 @@ export default function Page() {
         <meta property="og:image" content={article.cover_image} />
       </Head>
 
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-4 lg:w-[1000px]">
         <Link href="/blogs" passHref>
           <Button>
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -90,7 +90,7 @@ export default function Page() {
         </Link>
       </div>
 
-      <main className="container mx-auto flex flex-col gap-6 pb-10 md:px-4">
+      <main className="container mx-auto flex flex-col gap-6 pb-10 md:px-4 lg:w-[1000px]">
         <motion.article
           className="overflow-hidden bg-white shadow-sm md:rounded-lg"
           {...fadeIn}
