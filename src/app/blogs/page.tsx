@@ -109,9 +109,11 @@ export default function ArticlesPageWithPagination() {
                     tag_list={article.tag_list}
                     reading_time_minutes={article.reading_time_minutes}
                     user={{
+                      name: "",
                       username: "",
                       profile_image: "",
                     }}
+                    tags={[]}
                   />
                 ))}
               </div>

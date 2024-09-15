@@ -5,6 +5,7 @@ export interface Article {
   url?: string;
   tag_list: string[] | null;
   user: {
+    name: string;
     username: string;
     profile_image: string;
   };
@@ -15,4 +16,7 @@ export interface Article {
   path: string;
   body_html?: string;
   readable_publish_date?: string;
+  comments_count?: string;
+  public_reactions_count?: string;
+  tags: string[];
 }
