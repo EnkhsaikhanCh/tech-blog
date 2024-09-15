@@ -90,3 +90,84 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.prose iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.prose p {
+  text-align: justify;
+  overflow-wrap: break-word;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.prose h2 {
+  font-weight: 800;
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.prose h3 {
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #1f2937;
+}
+
+.prose a {
+  color: #60a5fb;
+  text-decoration: underline;
+  display: inline;
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+}
+
+.prose a:hover {
+  color: #2563eb;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose pre {
+  background-color: #282c34;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.prose .highlight-action {
+  display: none;
+}
+
+.prose ul,
+.prose ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.prose img {
+  max-width: 100%;
+  border-radius: 15px;
+  margin-bottom: 1.5rem;
+  display: block;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}

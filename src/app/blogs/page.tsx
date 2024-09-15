@@ -100,6 +100,8 @@ export default function ArticlesPageWithPagination() {
                   <BlogCard
                     key={article.id}
                     id={article.id}
+                    // url={article.url}
+                    path={article.path}
                     title={article.title}
                     description={article.description}
                     published_at={article.published_at}
@@ -107,9 +109,11 @@ export default function ArticlesPageWithPagination() {
                     tag_list={article.tag_list}
                     reading_time_minutes={article.reading_time_minutes}
                     user={{
+                      name: "",
                       username: "",
                       profile_image: "",
                     }}
+                    tags={[]}
                   />
                 ))}
               </div>
