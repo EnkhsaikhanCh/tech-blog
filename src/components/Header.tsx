@@ -3,12 +3,13 @@
 import { Mountain, X, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { MobileNav } from "./MobileNav";
 import { NavLink } from "./NavLink";
 import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
+import { useDisableScroll } from "@/hooks/useDisableScroll";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -16,24 +17,17 @@ export const Header = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Disable scrolling when menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    // Clean up on component unmount
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
+  useDisableScroll(isOpen);
 
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-white shadow">
         <div className="container mx-auto flex items-center justify-between p-4">
-          <Link href={"/"} className="flex items-center gap-2">
+          <Link
+            href={"/"}
+            className="flex items-center gap-2"
+            aria-label="Home"
+          >
             <Mountain className="h-6 w-6" />
             <span className="text-lg font-semibold">{siteConfig.name}</span>
           </Link>
@@ -44,7 +38,7 @@ export const Header = () => {
             size="icon"
             onClick={toggleMenu}
             className="md:hidden"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? (
               <X className="h-6 w-6" />
