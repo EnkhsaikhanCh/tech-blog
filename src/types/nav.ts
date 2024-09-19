@@ -4,4 +4,9 @@ export interface NavItem {
   label?: string;
 }
 
+export interface SelectCategoryItem {
+  label: string;
+  value: string;
+}
+
 export interface MainNavItem extends NavItem {}

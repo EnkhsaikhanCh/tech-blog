@@ -10,41 +10,67 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
 import { Article } from "@/types/article";
 import { BlogCard } from "./_components/BlogCard";
+import { docsConfig } from "@/config/docs";
 
 export default function ArticlesPageWithPagination() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const articlesPerPage = 9;
+  const [cache, setCache] = useState<{ [key: string]: Article[] }>({});
 
   useEffect(() => {
+    const cacheKey = `${selectedCategory}-${currentPage}`;
+
+    if (cache[cacheKey]) {
+      setArticles(cache[cacheKey]);
+      return;
+    }
+
     const fetchArticles = async () => {
       setLoading(true);
+      setError(null);
+
       try {
         let url = `https://dev.to/api/articles?page=${currentPage}&per_page=${articlesPerPage}`;
-
         if (selectedCategory) {
           url += `&tag=${selectedCategory}`;
         }
 
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Failed to fetch articles");
+        }
+
         const data = await response.json();
         setArticles(data);
+        setCache((prevCache) => ({
+          ...prevCache,
+          [cacheKey]: data,
+        }));
       } catch (error) {
-        console.error("Error fetching articles:", error);
+        if (error instanceof Error) {
+          setError(error.message);
+          console.error("Error fetching articles:", error.message);
+        } else {
+          setError("An unknown error occurred");
+          console.error("Unknown error fetching articles:", error);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchArticles();
-  }, [currentPage, selectedCategory]);
+  }, [currentPage, selectedCategory, cache]);
 
   const handlePageChange = (newPage: number) => {
+    if (newPage < 1) return;
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -63,23 +89,16 @@ export default function ArticlesPageWithPagination() {
             <SelectTrigger className="w-full bg-white md:w-[200px]">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="react">React</SelectItem>
-              <SelectItem value="nextjs">Next JS</SelectItem>
-              <SelectItem value="typescript">TypeScript</SelectItem>
-              <SelectItem value="javascript">JavaScript</SelectItem>
-              <SelectItem value="graphql">GraphQL</SelectItem>
-              <SelectItem value="apollo">Apollo</SelectItem>
-              <SelectItem value="css">CSS</SelectItem>
-              <SelectItem value="chatgpt">ChatGPT</SelectItem>
-              <SelectItem value="tailwindcss">Tailwind CSS</SelectItem>
-              <SelectItem value="jest">Jest</SelectItem>
-              <SelectItem value="cypress">Cypress</SelectItem>
-              <SelectItem value="threejs">Three JS</SelectItem>
-              <SelectItem value="cloudinary">Cloudinary</SelectItem>
+            <SelectContent className="z-50">
+              {docsConfig.selectCategoryItem.map((category, index) => (
+                <SelectItem key={index} value={category.value}>
+                  {category.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </motion.section>
+        {error ? <p className="text-red-500">Error: {error}</p> : null}
 
         <AnimatePresence mode="wait">
           <motion.section
@@ -93,7 +112,10 @@ export default function ArticlesPageWithPagination() {
             }}
           >
             {loading ? (
-              <p>Loading articles...</p>
+              <div className="flex items-center justify-center gap-2 font-semibold text-gray-500">
+                <LoaderCircle className="animate-spin" />
+                <p>Loading articles...</p>
+              </div>
             ) : (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {articles.map((article) => (
