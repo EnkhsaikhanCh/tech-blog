@@ -17,7 +17,6 @@ export const BlogCard = ({
   published_at,
   user,
   tags,
-  // tag_list,
   reading_time_minutes,
   path,
 }: Article) => {
@@ -46,7 +45,6 @@ export const BlogCard = ({
               <span className="flex items-center text-sm text-gray-500">
                 <Tag className="mr-1 h-4 w-4" />
                 {tags}
-                {/* {tag_list?.join(", ")} */}
               </span>
               <span className="text-sm text-gray-500">
                 {reading_time_minutes} min read
