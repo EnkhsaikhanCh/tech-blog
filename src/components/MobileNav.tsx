@@ -9,7 +9,6 @@ interface MobileNavPropsTypes {
 export const MobileNav = ({ toggleMenu, isOpen }: MobileNavPropsTypes) => {
   return (
     <>
-      {/* Mobile Menu Overlay */}
       <nav
         className={`fixed left-0 top-0 z-40 h-full w-full bg-white p-4 pt-20 ${
           isOpen ? "translate-y-0" : "-translate-y-full"
@@ -21,7 +20,7 @@ export const MobileNav = ({ toggleMenu, isOpen }: MobileNavPropsTypes) => {
               <Link
                 href={item.href}
                 className="text-lg text-[#696969]"
-                onClick={toggleMenu} // Close menu when link is clicked
+                onClick={toggleMenu}
               >
                 {item.title}
               </Link>

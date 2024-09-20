@@ -2,35 +2,32 @@
 
 import { Article } from "@/types/article";
 import {
-  ArrowLeft,
   Bookmark,
   Calendar,
   Clock,
   LoaderCircle,
+  LucideProps,
   MessageSquare,
   Share2,
   ThumbsUp,
 } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Head from "next/head";
 import parse from "html-react-parser";
+import { ActionButtonComponent } from "../_components/ActionButtonComponent";
 
 export default function Page() {
   const { username, slug } = useParams<{ username: string; slug: string }>();
-  const [article, setArticle] = useState<Article | null>(null);
+  const [article, setArticle] = useState<Article>();
   const [error, setError] = useState<string | null>(null);
 
-  const fetchArticle = async (
-    username: string,
-    slug: string,
-  ): Promise<Article | null> => {
+  const fetchArticle = async (username: string, slug: string) => {
     try {
       const response = await fetch(
         `https://dev.to/api/articles/${username}/${slug}`,
@@ -38,7 +35,6 @@ export default function Page() {
       return await response.json();
     } catch (error) {
       setError("Failed to load the article");
-      return null;
     }
   };
 
@@ -48,14 +44,11 @@ export default function Page() {
     }
   }, [username, slug]);
 
-  const fadeIn = useMemo(
-    () => ({
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.5 },
-    }),
-    [],
-  );
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 },
+  };
 
   if (!article) {
     return (
@@ -82,18 +75,13 @@ export default function Page() {
       </Head>
 
       <div className="container mx-auto px-4 py-4 lg:w-[1000px]">
-        <Link href="/blogs" passHref>
-          <Button>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            <p>Back to Articles</p>
-          </Button>
-        </Link>
+        <ActionButtonComponent href="/blogs" />
       </div>
 
       <main className="container mx-auto flex flex-col gap-6 pb-10 md:px-4 lg:w-[1000px]">
         <motion.article
           className="overflow-hidden bg-white shadow-sm md:rounded-lg"
-          {...fadeIn}
+          {...fadeInUp}
         >
           {article.cover_image ? (
             <Image
@@ -151,27 +139,23 @@ export default function Page() {
                 </span>
               ))}
             </div>
+
             <Separator className="my-8" />
+
             <div className="flex flex-col gap-2 md:flex-row md:justify-between">
               <div className="flex items-center space-x-2">
-                <Button variant="outline" className="font-bold">
-                  <ThumbsUp className="mr-2 h-4 w-4" />
-                  {article.public_reactions_count}
-                </Button>
-                <Button variant="outline" className="font-bold">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  {article.comments_count}
-                </Button>
+                <ActionButton
+                  label={article.public_reactions_count}
+                  Icon={ThumbsUp}
+                />
+                <ActionButton
+                  label={article.comments_count}
+                  Icon={MessageSquare}
+                />
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" className="font-bold">
-                  <Bookmark className="mr-2 h-4 w-4" />
-                  Save
-                </Button>
-                <Button variant="outline" className="font-bold">
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Share
-                </Button>
+                <ActionButton label="Save" Icon={Bookmark} />
+                <ActionButton label="Share" Icon={Share2} />
               </div>
             </div>
           </div>
@@ -180,3 +164,18 @@ export default function Page() {
     </>
   );
 }
+
+const ActionButton = ({
+  label,
+  Icon,
+}: {
+  label: string | number;
+  Icon: React.FC<LucideProps>;
+}) => {
+  return (
+    <Button variant="outline" className="font-bold">
+      <Icon className="mr-2 h-4 w-4" />
+      {label}
+    </Button>
+  );
+};
