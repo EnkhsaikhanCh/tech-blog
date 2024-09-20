@@ -22,16 +22,8 @@ export default function ArticlesPageWithPagination() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const articlesPerPage = 9;
-  const [cache, setCache] = useState<{ [key: string]: Article[] }>({});
 
   useEffect(() => {
-    const cacheKey = `${selectedCategory}-${currentPage}`;
-
-    if (cache[cacheKey]) {
-      setArticles(cache[cacheKey]);
-      return;
-    }
-
     const fetchArticles = async () => {
       setLoading(true);
       setError(null);
@@ -49,10 +41,6 @@ export default function ArticlesPageWithPagination() {
 
         const data = await response.json();
         setArticles(data);
-        setCache((prevCache) => ({
-          ...prevCache,
-          [cacheKey]: data,
-        }));
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -67,7 +55,7 @@ export default function ArticlesPageWithPagination() {
     };
 
     fetchArticles();
-  }, [currentPage, selectedCategory, cache]);
+  }, [currentPage, selectedCategory]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1) return;
@@ -122,20 +110,20 @@ export default function ArticlesPageWithPagination() {
                   <BlogCard
                     key={article.id}
                     id={article.id}
-                    // url={article.url}
-                    path={article.path}
                     title={article.title}
                     description={article.description}
+                    tags={article.tags}
+                    path={article.path}
                     published_at={article.published_at}
-                    username={article.user.username}
-                    tag_list={article.tag_list}
-                    reading_time_minutes={article.reading_time_minutes}
-                    user={{
-                      name: "",
-                      username: "",
-                      profile_image: "",
-                    }}
-                    tags={[]}
+                    user={article.user}
+                    cover_image={""}
+                    social_image={""}
+                    slug={""}
+                    url={""}
+                    body_html={""}
+                    comments_count={0}
+                    public_reactions_count={0}
+                    reading_time_minutes={0}
                   />
                 ))}
               </div>

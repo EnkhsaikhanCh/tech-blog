@@ -15,8 +15,9 @@ export const BlogCard = ({
   title,
   description,
   published_at,
-  username,
-  tag_list,
+  user,
+  tags,
+  // tag_list,
   reading_time_minutes,
   path,
 }: Article) => {
@@ -36,7 +37,7 @@ export const BlogCard = ({
               </span>
               <span className="flex items-center">
                 <User className="mr-1 h-4 w-4" />
-                {username}
+                {user.username}
               </span>
             </div>
           </CardContent>
@@ -44,7 +45,8 @@ export const BlogCard = ({
             <div className="flex w-full items-center justify-between">
               <span className="flex items-center text-sm text-gray-500">
                 <Tag className="mr-1 h-4 w-4" />
-                {tag_list?.join(", ")}
+                {tags}
+                {/* {tag_list?.join(", ")} */}
               </span>
               <span className="text-sm text-gray-500">
                 {reading_time_minutes} min read
