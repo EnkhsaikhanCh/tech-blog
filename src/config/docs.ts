@@ -1,8 +1,17 @@
-import { MainNavItem, SelectCategoryItem } from "@/types/nav";
+import { Icons } from "@/components/Icons";
+import {
+  FooterCategoryItem,
+  MainNavItem,
+  SelectCategoryItem,
+  SocialLink,
+} from "@/types/nav";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 export interface DocsConfig {
   mainNav: MainNavItem[];
   selectCategoryItem: SelectCategoryItem[];
+  footerCategoryItem: FooterCategoryItem[];
+  socialLink: SocialLink[];
 }
 
 export const docsConfig: DocsConfig = {
@@ -23,5 +32,17 @@ export const docsConfig: DocsConfig = {
     { label: "Cloudinary", value: "cloudinary" },
     { label: "Jest", value: "jest" },
     { label: "Cypress", value: "cypress" },
+  ],
+  footerCategoryItem: [
+    { label: "Artificial Intelligence", href: "/" },
+    { label: "Web Development", href: "/" },
+    { label: "Cybersecurity", href: "/" },
+    { label: "Data Science", href: "/" },
+  ],
+  socialLink: [
+    { label: "Facebook", Icon: Facebook, href: "/" },
+    { label: "Instagram", Icon: Instagram, href: "/" },
+    { label: "LinkedIn", Icon: Linkedin, href: "/" },
+    { label: "Twitter", Icon: Icons.twitter, href: "/" },
   ],
 };
