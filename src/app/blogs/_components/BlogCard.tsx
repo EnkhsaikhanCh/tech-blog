@@ -1,7 +1,8 @@
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Article } from "@/types/article";
 import { motion } from "framer-motion";
-import { Calendar, Tag, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import Link from "next/link";
 
 const fadeInUp = {
@@ -16,14 +17,14 @@ export const BlogCard = ({
   description,
   published_at,
   user,
-  tags,
+  tag_list,
   reading_time_minutes,
   path,
 }: Article) => {
   return (
     <motion.div key={id} {...fadeInUp}>
       <Link href={path}>
-        <Card className="flex h-full cursor-pointer flex-col justify-between overflow-hidden shadow-none transition-shadow duration-300 hover:shadow-md">
+        <Card className="flex h-full cursor-pointer flex-col justify-between overflow-hidden shadow transition-shadow duration-300 hover:shadow-md">
           <CardContent className="p-6">
             <h2 className="mb-2 line-clamp-2 text-xl font-semibold transition-colors duration-300 hover:text-blue-600">
               {title}
@@ -32,7 +33,11 @@ export const BlogCard = ({
             <div className="flex items-center space-x-4 text-sm text-gray-500">
               <span className="flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
-                {new Date(published_at).toLocaleDateString()}
+                {new Date(published_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </span>
               <span className="flex items-center">
                 <User className="mr-1 h-4 w-4" />
@@ -40,12 +45,19 @@ export const BlogCard = ({
               </span>
             </div>
           </CardContent>
-          <CardFooter className="bg-gray-50 px-6 py-3">
+          <CardFooter className="p-6">
             <div className="flex w-full items-center justify-between">
-              <span className="flex items-center text-sm text-gray-500">
-                <Tag className="mr-1 h-4 w-4" />
-                {tags}
-              </span>
+              <div className="flex flex-wrap gap-2">
+                {tag_list.map((tag, index) => (
+                  <Badge
+                    key={index}
+                    className="flex items-center text-sm"
+                    variant="secondary"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
               <span className="text-sm text-gray-500">
                 {reading_time_minutes} min read
               </span>

@@ -5,6 +5,7 @@ export interface Article {
   cover_image: string;
   social_image: string;
   tags: string[];
+  tag_list: string[];
   slug: string;
   path: string;
   url: string;

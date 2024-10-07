@@ -9,11 +9,14 @@ import { NewsletterForm } from "./NewsletterForm";
 import { FooterLink } from "./FooterLink";
 import { docsConfig } from "@/config/docs";
 import { ScrollToTop } from "./ScrollToTop";
+import { usePathname } from "next/navigation";
 
 export const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = usePathname();
+  const isHomePage = router === "/";
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +40,9 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="relative border-t bg-white pt-12 text-gray-600">
+    <footer
+      className={`relative border-t pt-12 text-gray-600 ${isHomePage ? "bg-grey-50" : "bg-white"}`}
+    >
       <div className="container mx-auto px-4">
         <div className="mb-8 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
