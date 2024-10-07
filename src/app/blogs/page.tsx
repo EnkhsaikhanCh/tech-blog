@@ -112,7 +112,7 @@ export default function ArticlesPageWithPagination() {
                     id={article.id}
                     title={article.title}
                     description={article.description}
-                    tags={article.tags}
+                    tag_list={article.tag_list}
                     path={article.path}
                     published_at={article.published_at}
                     user={article.user}
@@ -124,6 +124,7 @@ export default function ArticlesPageWithPagination() {
                     comments_count={0}
                     public_reactions_count={0}
                     reading_time_minutes={0}
+                    tags={[]}
                   />
                 ))}
               </div>
