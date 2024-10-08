@@ -11,29 +11,26 @@ const fadeInUp = {
   transition: { duration: 0.5 },
 };
 
-export const BlogCard = ({
-  id,
-  title,
-  description,
-  published_at,
-  user,
-  tag_list,
-  reading_time_minutes,
-  path,
-}: Article) => {
+interface BlogCardProp {
+  article: Article;
+}
+
+export const BlogCard = ({ article }: BlogCardProp) => {
   return (
-    <motion.div key={id} {...fadeInUp}>
-      <Link href={path}>
+    <motion.div key={article.id} {...fadeInUp}>
+      <Link href={article.path}>
         <Card className="flex h-full cursor-pointer flex-col justify-between overflow-hidden shadow transition-shadow duration-300 hover:shadow-md">
           <CardContent className="p-6">
             <h2 className="mb-2 line-clamp-2 text-xl font-semibold transition-colors duration-300 hover:text-blue-600">
-              {title}
+              {article.title}
             </h2>
-            <p className="mb-4 line-clamp-3 text-gray-600">{description}</p>
+            <p className="mb-4 line-clamp-3 text-gray-600">
+              {article.description}
+            </p>
             <div className="flex items-center space-x-4 text-sm text-gray-500">
               <span className="flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
-                {new Date(published_at).toLocaleDateString("en-US", {
+                {new Date(article.published_at).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                   year: "numeric",
@@ -41,14 +38,14 @@ export const BlogCard = ({
               </span>
               <span className="flex items-center">
                 <User className="mr-1 h-4 w-4" />
-                {user.username}
+                {article.user.username}
               </span>
             </div>
           </CardContent>
           <CardFooter className="p-6">
             <div className="flex w-full items-center justify-between">
               <div className="flex flex-wrap gap-2">
-                {tag_list.map((tag, index) => (
+                {article.tag_list.map((tag, index) => (
                   <Badge
                     key={index}
                     className="flex items-center text-sm"
@@ -59,7 +56,7 @@ export const BlogCard = ({
                 ))}
               </div>
               <span className="text-sm text-gray-500">
-                {reading_time_minutes} min read
+                {article.reading_time_minutes} min read
               </span>
             </div>
           </CardFooter>
