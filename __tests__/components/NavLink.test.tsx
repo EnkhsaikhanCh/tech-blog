@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { NavLink } from "@/components/NavLink";
+import { NavLink } from "@/components/header/NavLink";
 import "@testing-library/jest-dom"; // Importing the custom matchers
 
 describe("NavLink", () => {

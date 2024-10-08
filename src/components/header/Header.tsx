@@ -2,7 +2,7 @@
 
 import { Mountain, X, MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { MobileNav } from "./MobileNav";
