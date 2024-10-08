@@ -1,11 +1,11 @@
 import { Article } from "@/types/article";
 import { useEffect, useState } from "react";
 
-export const FetchAllArticles = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+export const useFetchAllArticles = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const articlesPerPage = 9;
 

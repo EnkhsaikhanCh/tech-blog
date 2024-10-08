@@ -12,7 +12,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BlogCard } from "../../components/BlogCard";
 import { docsConfig } from "@/config/docs";
-import { FetchAllArticles } from "@/api/FetchAllArticles";
+import { useFetchAllArticles } from "@/api/useFetchAllArticles";
 import { SpinnerLoader } from "@/components/SpinnerLoader";
 
 export default function ArticlesPageWithPagination() {
@@ -25,7 +25,7 @@ export default function ArticlesPageWithPagination() {
     articles,
     loading,
     error,
-  } = FetchAllArticles();
+  } = useFetchAllArticles();
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1) return;

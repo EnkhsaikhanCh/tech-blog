@@ -1,4 +1,4 @@
-import { LinkButton } from "../LinkButton";
+import { LinkButton } from "../buttons/LinkButton";
 
 export const Hero = () => {
   return (

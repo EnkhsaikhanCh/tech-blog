@@ -1,49 +1,18 @@
 "use client";
 
-import { Article } from "@/types/article";
-import {
-  ArrowLeft,
-  Bookmark,
-  Calendar,
-  Clock,
-  LoaderCircle,
-  LucideProps,
-  MessageSquare,
-  Share2,
-  ThumbsUp,
-} from "lucide-react";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ArrowLeft, LoaderCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import Head from "next/head";
 import parse from "html-react-parser";
-import { LinkButton } from "@/components/LinkButton";
+import { LinkButton } from "@/components/buttons/LinkButton";
+import { useFetchOneArticle } from "@/api/useFetchOneArticle";
+import { ArticleActions } from "../_components/ArticleActions";
+import { ArticleAuthorInfo } from "../_components/ArticleAuthorInfo";
 
 export default function Page() {
-  const { username, slug } = useParams<{ username: string; slug: string }>();
-  const [article, setArticle] = useState<Article>();
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchArticle = async (username: string, slug: string) => {
-    try {
-      const response = await fetch(
-        `https://dev.to/api/articles/${username}/${slug}`,
-      );
-      return await response.json();
-    } catch (error) {
-      setError("Failed to load the article");
-    }
-  };
-
-  useEffect(() => {
-    if (username && slug) {
-      fetchArticle(username, slug).then(setArticle);
-    }
-  }, [username, slug]);
+  const { article, loading, error } = useFetchOneArticle();
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -51,7 +20,7 @@ export default function Page() {
     transition: { duration: 0.5 },
   };
 
-  if (!article) {
+  if (loading) {
     return (
       <div className="my-5 flex min-h-screen items-center justify-center gap-2 font-semibold text-gray-500">
         <LoaderCircle className="animate-spin" /> <span>Blog loading...</span>
@@ -67,18 +36,38 @@ export default function Page() {
     );
   }
 
+  if (!article) {
+    return (
+      <div className="my-5 flex min-h-screen items-center justify-center gap-2 font-semibold text-gray-500">
+        <span>Article not found.</span>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
-        <title>{article.title}</title>
-        <meta name="description" content={article.description} />
-        <meta property="og:image" content={article.cover_image} />
+        <title>{article.title || "Article"}</title>
+        <meta
+          name="description"
+          content={article.description || "Blog article"}
+        />
+        <meta
+          property="og:image"
+          content={article.cover_image || "/default-cover.jpg"}
+        />
+        <meta property="og:title" content={article.title || "Article"} />
+        <meta
+          property="og:description"
+          content={article.description || "Blog article"}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <div className="container mx-auto px-4 py-4 lg:w-[1000px]">
         <LinkButton
           href={"/blogs"}
-          label={"Back to Articles"}
+          label={"Back to Blogs"}
           showIcon
           Icon={ArrowLeft}
         />
@@ -89,10 +78,11 @@ export default function Page() {
           className="overflow-hidden bg-white shadow-sm md:rounded-lg"
           {...fadeInUp}
         >
+          {/* Article Cover Image */}
           {article.cover_image ? (
             <Image
               src={article.cover_image}
-              alt={article.title}
+              alt={article.title || "Article cover image"}
               layout="responsive"
               width={500}
               height={500}
@@ -104,84 +94,38 @@ export default function Page() {
             <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
               {article.title}
             </h1>
-            <div className="mb-6 flex items-center">
-              <Avatar className="mr-3 h-10 w-10">
-                <AvatarImage
-                  src={article.user.profile_image}
-                  alt={article.user.name}
-                />
-                <AvatarFallback>{article.user.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-semibold text-gray-900">
-                  {article.user.name}
-                </p>
-                <div className="flex items-center text-sm text-gray-500">
-                  <Calendar className="mr-1 h-4 w-4" />
-                  <time dateTime={article.published_at}>
-                    {new Date(article.published_at).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      },
-                    )}
-                  </time>
-                  <span className="mx-2">•</span>
-                  <Clock className="mr-1 h-4 w-4" />
-                  <span>{article.reading_time_minutes} min read</span>
-                </div>
-              </div>
+
+            {/* Article Author Info */}
+            <ArticleAuthorInfo article={article} />
+
+            {/* Article content */}
+            <div className="prose">
+              {parse(article.body_html || "<p>No content available.</p>")}
             </div>
-            <div className="prose">{parse(article.body_html || "")}</div>
+
+            {/* Article tags */}
             <div className="mt-8 flex flex-wrap gap-2">
-              {article.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="rounded-full bg-blue-100 px-2 py-1 text-sm text-blue-800"
-                >
-                  #{tag}
-                </span>
-              ))}
+              {article.tags?.length > 0 ? (
+                article.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="rounded-full bg-blue-100 px-2 py-1 text-sm text-blue-800"
+                  >
+                    #{tag}
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-500">No tags available</span>
+              )}
             </div>
 
             <Separator className="my-8" />
 
-            <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-              <div className="flex items-center space-x-2">
-                <ActionButton
-                  label={article.public_reactions_count}
-                  Icon={ThumbsUp}
-                />
-                <ActionButton
-                  label={article.comments_count}
-                  Icon={MessageSquare}
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <ActionButton label="Save" Icon={Bookmark} />
-                <ActionButton label="Share" Icon={Share2} />
-              </div>
-            </div>
+            {/* Article Actions */}
+            <ArticleActions article={article} />
           </div>
         </motion.article>
       </main>
     </>
   );
 }
-
-const ActionButton = ({
-  label,
-  Icon,
-}: {
-  label: string | number;
-  Icon: React.FC<LucideProps>;
-}) => {
-  return (
-    <Button variant="outline" className="font-bold">
-      <Icon className="mr-2 h-4 w-4" />
-      {label}
-    </Button>
-  );
-};

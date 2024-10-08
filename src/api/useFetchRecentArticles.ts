@@ -1,7 +1,7 @@
 import { Article } from "@/types/article";
 import { useEffect, useState } from "react";
 
-export const FetchRecentArticles = () => {
+export const useFetchRecentArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,6 +17,7 @@ export const FetchRecentArticles = () => {
       const response = await fetch(url);
 
       const data = await response.json();
+
       setArticles(data);
     } catch (error) {
       setError("Failed to fetch articles");

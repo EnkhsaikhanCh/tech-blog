@@ -1,13 +1,13 @@
 "use client";
 
 import { BlogCard } from "@/components/BlogCard";
-import { LinkButton } from "../LinkButton";
+import { LinkButton } from "../buttons/LinkButton";
 // import { LoaderCircle } from "lucide-react";
-import { FetchRecentArticles } from "@/api/FetchRecentArticles";
+import { useFetchRecentArticles } from "@/api/useFetchRecentArticles";
 import { SpinnerLoader } from "../SpinnerLoader";
 
 export const RecentArticles = () => {
-  const { articles, loading, error } = FetchRecentArticles();
+  const { articles, loading, error } = useFetchRecentArticles();
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
