@@ -1,10 +1,9 @@
 "use client";
 
-import { BlogCard } from "@/app/blogs/_components/BlogCard";
+import { BlogCard } from "@/components/BlogCard";
 import { Article } from "@/types/article";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import Link from "next/link";
+import { LinkButton } from "./LinkButton";
 
 export const RecentArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -63,11 +62,7 @@ export const RecentArticles = () => {
             ))}
           </div>
           <div className="mt-12 text-center">
-            <Link href={"/articles"}>
-              <Button size="lg" className="h-12 font-semibold">
-                View All Articles
-              </Button>
-            </Link>
+            <LinkButton href={"/blogs"} size="lg" label={"View All Blogs"} />
           </div>
         </div>
       </div>

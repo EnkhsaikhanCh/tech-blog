@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { LinkButton } from "./LinkButton";
 
 export const ExploreTopics = () => {
   return (
@@ -18,14 +18,14 @@ export const ExploreTopics = () => {
               "Machine Learning",
               "Robotics",
               "Virtual Reality",
-            ].map((topic) => (
-              <Button
-                key={topic}
+            ].map((topic, index) => (
+              <LinkButton
+                key={index}
                 variant="outline"
-                className="h-12 text-lg font-semibold shadow-none md:h-16"
-              >
-                {topic}
-              </Button>
+                href={"#"}
+                label={topic}
+                className="h-12 w-full text-lg font-semibold shadow-none md:h-16"
+              />
             ))}
           </div>
         </div>

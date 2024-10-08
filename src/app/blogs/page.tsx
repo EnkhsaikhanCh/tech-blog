@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
 import { Article } from "@/types/article";
-import { BlogCard } from "./_components/BlogCard";
+import { BlogCard } from "../../components/BlogCard";
 import { docsConfig } from "@/config/docs";
 
 export default function ArticlesPageWithPagination() {

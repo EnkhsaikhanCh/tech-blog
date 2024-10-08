@@ -2,6 +2,7 @@
 
 import { Article } from "@/types/article";
 import {
+  ArrowLeft,
   Bookmark,
   Calendar,
   Clock,
@@ -20,7 +21,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
 import parse from "html-react-parser";
-import { ActionButtonComponent } from "../_components/ActionButtonComponent";
+import { LinkButton } from "@/components/LinkButton";
 
 export default function Page() {
   const { username, slug } = useParams<{ username: string; slug: string }>();
@@ -75,7 +76,12 @@ export default function Page() {
       </Head>
 
       <div className="container mx-auto px-4 py-4 lg:w-[1000px]">
-        <ActionButtonComponent href="/blogs" />
+        <LinkButton
+          href={"/blogs"}
+          label={"Back to Articles"}
+          showIcon
+          Icon={ArrowLeft}
+        />
       </div>
 
       <main className="container mx-auto flex flex-col gap-6 pb-10 md:px-4 lg:w-[1000px]">
