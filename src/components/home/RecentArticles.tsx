@@ -2,8 +2,9 @@
 
 import { BlogCard } from "@/components/BlogCard";
 import { LinkButton } from "../LinkButton";
-import { LoaderCircle } from "lucide-react";
+// import { LoaderCircle } from "lucide-react";
 import { FetchRecentArticles } from "@/api/FetchRecentArticles";
+import { SpinnerLoader } from "../SpinnerLoader";
 
 export const RecentArticles = () => {
   const { articles, loading, error } = FetchRecentArticles();
@@ -17,10 +18,11 @@ export const RecentArticles = () => {
           </h2>
           {error ? <p className="text-red-500">Error: {error}</p> : null}
           {loading ? (
-            <div className="flex items-center justify-center gap-2 font-semibold text-gray-500">
-              <LoaderCircle className="animate-spin" />
-              <p>Loading articles...</p>
-            </div>
+            // <div className="flex items-center justify-center gap-2 font-semibold text-gray-500">
+            //   <LoaderCircle className="animate-spin" />
+            //   <p>Loading articles...</p>
+            // </div>
+            <SpinnerLoader label="Loading articles..." />
           ) : (
             <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {articles.map((article) => (

@@ -9,10 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BlogCard } from "../../components/BlogCard";
 import { docsConfig } from "@/config/docs";
 import { FetchAllArticles } from "@/api/FetchAllArticles";
+import { SpinnerLoader } from "@/components/SpinnerLoader";
 
 export default function ArticlesPageWithPagination() {
   const {
@@ -77,10 +78,7 @@ export default function ArticlesPageWithPagination() {
             }}
           >
             {loading ? (
-              <div className="flex items-center justify-center gap-2 font-semibold text-gray-500">
-                <LoaderCircle className="animate-spin" />
-                <p>Loading articles...</p>
-              </div>
+              <SpinnerLoader label="Loading articles..." />
             ) : (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {articles.map((article) => (
