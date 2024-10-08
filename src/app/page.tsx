@@ -1,6 +1,6 @@
-import { ExploreTopics } from "@/components/ExploreTopics";
-import { Hero } from "@/components/Hero";
-import { RecentArticles } from "@/components/RecentArticles";
+import { ExploreTopics } from "@/components/home/ExploreTopics";
+import { Hero } from "@/components/home/Hero";
+import { RecentArticles } from "@/components/home/RecentArticles";
 
 export default function Home() {
   return (
