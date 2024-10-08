@@ -18,7 +18,6 @@ interface LinkButtonProps {
   showIcon?: boolean;
   isDisabled?: boolean;
   className?: string;
-  onClick?: () => void;
 }
 
 export const LinkButton = ({
@@ -30,7 +29,6 @@ export const LinkButton = ({
   showIcon,
   isDisabled = false,
   className = "",
-  onClick,
 }: LinkButtonProps) => {
   return (
     <Link href={isDisabled ? "#" : href} passHref>
@@ -39,7 +37,6 @@ export const LinkButton = ({
         size={size}
         className={`font-semibold ${className}`}
         disabled={isDisabled}
-        onClick={onClick}
       >
         {showIcon && Icon && <Icon className="mr-2 h-4 w-4" />}
         <p>{label}</p>
