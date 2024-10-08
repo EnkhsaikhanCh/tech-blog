@@ -18,9 +18,9 @@ export const Hero = () => {
               </div>
               <div className="grid grid-cols-1 gap-2 md:flex">
                 <LinkButton
-                  href={"/"}
+                  href={"/blogs"}
                   size="lg"
-                  label={"Read Latest Articles"}
+                  label={"Read Latest Blogs"}
                 />
                 <LinkButton
                   href={"/"}
