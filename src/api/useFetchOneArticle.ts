@@ -24,7 +24,7 @@ export const useFetchOneArticle = () => {
       return data;
     } catch (error) {
       setError("Failed to load the article");
-      return null; // return null explicitly on error
+      return null;
     } finally {
       setLoading(false);
     }

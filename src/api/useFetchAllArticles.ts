@@ -18,11 +18,13 @@ export const useFetchAllArticles = () => {
 
     try {
       let url = `https://dev.to/api/articles?page=${currentPage}&per_page=${articlesPerPage}`;
+
       if (selectedCategory) {
         url += `&tag=${selectedCategory}`;
       }
 
       const response = await fetch(url);
+
       if (!response.ok) {
         throw new Error("Failed to fetch articles");
       }
@@ -30,13 +32,8 @@ export const useFetchAllArticles = () => {
       const data = await response.json();
       setArticles(data);
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-        console.error("Error fetching articles:", error.message);
-      } else {
-        setError("An unknown error occurred");
-        console.error("Unknown error fetching articles:", error);
-      }
+      setError("Failed to fetch articles");
+      return null;
     } finally {
       setLoading(false);
     }
