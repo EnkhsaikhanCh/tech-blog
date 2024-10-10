@@ -10,6 +10,7 @@ import { LinkButton } from "@/components/buttons/LinkButton";
 import { useFetchOneArticle } from "@/api/useFetchOneArticle";
 import { ArticleActions } from "../_components/ArticleActions";
 import { ArticleAuthorInfo } from "../_components/ArticleAuthorInfo";
+import { Badge } from "@/components/ui/badge";
 
 export default function Page() {
   const { article, loading, error } = useFetchOneArticle();
@@ -107,12 +108,13 @@ export default function Page() {
             <div className="mt-8 flex flex-wrap gap-2">
               {article.tags?.length > 0 ? (
                 article.tags.map((tag, index) => (
-                  <span
+                  <Badge
                     key={index}
-                    className="rounded-full bg-blue-100 px-2 py-1 text-sm text-blue-800"
+                    variant={"secondary"}
+                    className="flex items-center text-sm"
                   >
-                    #{tag}
-                  </span>
+                    {tag}
+                  </Badge>
                 ))
               ) : (
                 <span className="text-gray-500">No tags available</span>

@@ -17,10 +17,13 @@ export const useFetchOneArticle = () => {
       const response = await fetch(
         `https://dev.to/api/articles/${username}/${slug}`,
       );
+
       if (!response.ok) {
         throw new Error("Failed to fetch the article");
       }
+
       const data: Article = await response.json();
+
       return data;
     } catch (error) {
       setError("Failed to load the article");

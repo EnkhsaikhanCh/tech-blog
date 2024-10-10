@@ -30,6 +30,7 @@ export const useFetchAllArticles = () => {
       }
 
       const data = await response.json();
+
       setArticles(data);
     } catch (error) {
       setError("Failed to fetch articles");

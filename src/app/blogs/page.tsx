@@ -15,7 +15,7 @@ import { docsConfig } from "@/config/docs";
 import { useFetchAllArticles } from "@/api/useFetchAllArticles";
 import { SpinnerLoader } from "@/components/SpinnerLoader";
 
-export default function ArticlesPageWithPagination() {
+export default function Blogs() {
   const {
     selectedCategory,
     setSelectedCategory,
