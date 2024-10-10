@@ -19,9 +19,9 @@ export const BlogCard = ({ article }: BlogCardProp) => {
   return (
     <motion.div key={article.id} {...fadeInUp}>
       <Link href={article.path}>
-        <Card className="flex h-full cursor-pointer flex-col justify-between overflow-hidden shadow transition-shadow duration-300 hover:shadow-md">
+        <Card className="group h-full cursor-pointer flex-col justify-between overflow-hidden shadow-none transition-shadow duration-300 hover:shadow-md">
           <CardContent className="p-6">
-            <h2 className="mb-2 line-clamp-2 text-xl font-semibold transition-colors duration-300 hover:text-blue-600">
+            <h2 className="mb-2 line-clamp-2 text-xl font-semibold transition-colors duration-300 group-hover:text-blue-600">
               {article.title}
             </h2>
             <p className="mb-4 line-clamp-3 text-gray-600">
